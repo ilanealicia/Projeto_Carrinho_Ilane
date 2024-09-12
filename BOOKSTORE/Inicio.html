@@ -150,9 +150,9 @@
                 let products = data.products;
 
                 if (order === 'asc') {
-                    products.sort((a, b) => parseFloat(a.price.replace('R$', '').trim()) - parseFloat(b.price.replace('R$', '').trim()));
+                    products.sort((a, b) => parseFloat(a.price.replace('R$'0,00 '').trim()) - parseFloat(b.price.replace('R$'0,00 '').trim()));
                 } else {
-                    products.sort((a, b) => parseFloat(b.price.replace('R$', '').trim()) - parseFloat(a.price.replace('R$', '').trim()));
+                    products.sort((a, b) => parseFloat(b.price.replace('R$'0,00 '').trim()) - parseFloat(a.price.replace('R$'0,00 '').trim()));
                 }
 
                 const productContainer = document.getElementById('product-container');
