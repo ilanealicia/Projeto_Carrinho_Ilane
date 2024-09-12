@@ -91,6 +91,28 @@
         </div>
     </nav>
 
+    <div id="carouselExampleFade" class="carousel slide carousel-fade">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="Amêndoas.jpg" class="d-block w-20" alt="Amêndoas">
+          </div>
+          <div class="carousel-item">
+            <img src="Biblioteca meia noite.jpg" class="d-block w-20" alt="Biblioteca meia noite">
+          </div>
+          <div class="carousel-item">
+            <img src="Verity.jpg" class="d-block w-100" alt="Verity">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Próximo</span>
+        </button>
+      </div>
+
     <div class="container">
         <div class="row">
             <div style="width: 50%;">
@@ -123,7 +145,7 @@
 
         async function loadProducts(order = 'asc') {
             try {
-                const response = await fetch('db.json'); // Carrega o arquivo db.json
+                const response = await fetch('db.json');
                 const data = await response.json();
                 let products = data.products;
 
