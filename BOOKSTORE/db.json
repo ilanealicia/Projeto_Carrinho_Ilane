@@ -1,0 +1,34 @@
+{
+  "products": [
+    {
+      "src": "Evelyn Hugo.jpg",
+      "alt": "Evelyn Hugo",
+      "title": "Os sete maridos de Evelyn Hugo",
+      "price": "R$ 40,89"
+    },
+    {
+      "src": "Daisy Jones.jpg",
+      "alt": "Daisy Jones",
+      "title": "Daisy Jones and The Six",
+      "price": "R$ 23,99"
+    },
+    {
+      "src": "Mulher no escuro.jpg",
+      "alt": "Mulher no escuro",
+      "title": "Uma mulher no escuro",
+      "price": "R$ 48,12"
+    },
+    {
+      "src": "O bom filho.jpg",
+      "alt": "O bom filho",
+      "title": "O bom filho",
+      "price": "R$ 44,99"
+    },
+    {
+      "src": "Paciente silenciosa.jpg",
+      "alt": "Paciente silenciosa",
+      "title": "A paciente silenciosa",
+      "price": "R$ 35,67"
+    }
+  ]
+}

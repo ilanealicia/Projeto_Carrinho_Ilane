@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOKSTORE</title>
+    <link rel="icon" href="Icon.png" type="image/png">
+    <script src="EC.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        .navbar-brand {
+            font-family: 'Lora', serif;
+        }
+
+        .navbar {
+            background-color: #e387ff;
+        }
+
+        .carousel-inner img {
+            max-width: 100%;
+            max-height: 300px;
+            margin: auto;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .ofertas-title {
+            color: #e387ff;
+            font-family: 'Lora', serif;
+            font-size: 2.5rem;
+        }
+
+        .card:hover {
+            box-shadow: .3rem .5rem .3rem rgba(0, 0, 0, .15);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="Icon.png" alt="icon" width="30" height="24" class="d-inline-block align-text-top">
+                BOOKSTORE
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <a class="nav-link active" aria-current="page" href="#">Início</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Categoria
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Terror</a></li>
+                                        <li><a class="dropdown-item" href="#">Romance</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Fantasia</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="carrinho.html">Carrinho</a>
+                                </li>
+                            </ul>
+                            <form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div style="width: 50%;">
+                <a href="#" onclick="ordenarProdutos('asc')">Crescente</a>
+                <a href="#" onclick="ordenarProdutos('desc')">Decrescente</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="text-center ofertas-title my-4">OFERTAS</h1>
+        <div class="d-flex justify-content-around flex-wrap" id="product-container"></div>
+    </div>
+
+    <script>
+
+        function adicionarAoCarrinho(produto) {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            const produtoExistente = carrinho.find(p => p.title === produto.title);
+
+            if (produtoExistente) {
+                produtoExistente.quantidade += 1;
+            } else {
+                carrinho.push({ ...produto, quantidade: 1 });
+            }
+
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            alert('Produto adicionado ao carrinho!');
+        }
+
+        async function loadProducts(order = 'asc') {
+            try {
+                const response = await fetch('db.json'); // Carrega o arquivo db.json
+                const data = await response.json();
+                let products = data.products;
+
+                if (order === 'asc') {
+                    products.sort((a, b) => parseFloat(a.price.replace('R$', '').trim()) - parseFloat(b.price.replace('R$', '').trim()));
+                } else {
+                    products.sort((a, b) => parseFloat(b.price.replace('R$', '').trim()) - parseFloat(a.price.replace('R$', '').trim()));
+                }
+
+                const productContainer = document.getElementById('product-container');
+                productContainer.innerHTML = '';
+
+                products.forEach(product => {
+                    const productCard = `
+                        <div class="col-3">
+                            <produto-card src="${product.src}" alt="${product.alt}" title="${product.title}" price="${product.price}"></produto-card>
+                            <button class="btn btn-primary mt-2" onclick='adicionarAoCarrinho(${JSON.stringify(product)})'>Adicionar ao Carrinho</button>
+                            <a href="detalhes.html?id=${product.id}" class="btn btn-outline-secondary mt-2">Detalhes</a>
+                        </div>
+                    `;
+                    productContainer.innerHTML += productCard;
+                });
+            } catch (error) {
+                console.error('Erro ao carregar os produtos:', error);
+            }
+        }
+
+        function ordenarProdutos(order) {
+            loadProducts(order);
+        }
+
+        window.onload = loadProducts;
+    </script>
+
+</body>
+
+</html>
